@@ -13,7 +13,7 @@ const navigate = useNavigate();
     signOut(auth)
       .then(() => {
         console.log("Вы вышли из аккаунта");
-navigate('/start')
+navigate('/')
       })
       .catch((error) => {
         console.error("Ошибка выхода:", error);

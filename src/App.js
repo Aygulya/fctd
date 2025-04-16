@@ -70,7 +70,7 @@ function App() {
 
         <div style={{ flex: 1, padding: 24 }}>
           <Routes>
-          <Route path="/start" element={<Welcome />} />
+          <Route path="/" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             
@@ -78,7 +78,7 @@ function App() {
               path="/"
               element={
                 <ProtectedRoute>
-
+<Welcome />
                 </ProtectedRoute>
               }
             />
@@ -86,7 +86,6 @@ function App() {
               path="/page/:id"
               element={
                 <ProtectedRoute>
-                  <Page />
                 </ProtectedRoute>
               }
             />

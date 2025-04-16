@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) return <div>Загрузка...</div>; // пока не знаем, авторизован ли
 
-  if (!user) return <Navigate to="/login" />; // не авторизован — отправить на вход
+  if (!user) return <Navigate to="/" />; // не авторизован — отправить на вход
 
   return children; // всё ок — отрендерить страницу
 };
