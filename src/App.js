@@ -79,6 +79,7 @@ function App() {
               element={
                 <ProtectedRoute>
 <Welcome />
+
                 </ProtectedRoute>
               }
             />
@@ -86,6 +87,7 @@ function App() {
               path="/page/:id"
               element={
                 <ProtectedRoute>
+                  <Page />
                 </ProtectedRoute>
               }
             />
