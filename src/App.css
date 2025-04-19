@@ -60,3 +60,23 @@
     transform: rotate(360deg);
   }
 }
+/* index.css или App.css */
+
+.desktop-sidebar {
+  width: 200px;
+}
+
+@media (max-width: 768px) {
+  .desktop-sidebar {
+    display: none;
+  }
+  .menu-button {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu-button {
+    display: none;
+  }
+}
