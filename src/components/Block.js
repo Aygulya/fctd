@@ -1014,7 +1014,154 @@ const Block = ({ block, pageId, onDelete }) => {
           onChange={(e) => setBlockTitle(e.target.value)}
           placeholder="Block Title"
         />
-        {/* Add other block types rendering here */}
+          <div
+      style={{
+        background: selectedColor,
+        padding: 16,
+        marginBottom: 12,
+        borderRadius: 8,
+        position: "relative",
+      }}
+    >
+      <Space direction="vertical" style={{ width: "100%" }}>
+        <Input
+          value={blockTitle}
+          onChange={(e) => setBlockTitle(e.target.value)}
+          placeholder="Заголовок"
+        />
+        {goalType === "finance" ? (
+          <>
+            <Input
+              addonBefore="Цель (₾)"
+              type="number"
+              value={goalSum}
+              onChange={(e) => setGoalSum(Number(e.target.value))}
+            />
+
+            <Space>
+              <Input
+                placeholder="Сумма"
+                value={newContributionAmount}
+                onChange={(e) => setNewContributionAmount(e.target.value)}
+                type="number"
+              />
+              <Select value={newCurrency} onChange={(val) => setNewCurrency(val)} style={{ width: 80 }}>
+                <Option value="₾">₾</Option>
+                <Option value="$">$</Option>
+                <Option value="€">€</Option>
+                <Option value="₽">₽</Option>
+              </Select>
+              <Button onClick={handleAddContribution}>Внести</Button>
+            </Space>
+
+            <Progress percent={Math.min(100, Math.round(financeProgress))} />
+
+            <List
+              header={<strong>История взносов</strong>}
+              bordered
+              dataSource={history}
+              renderItem={(item, index) => (
+                <List.Item
+                  actions={[
+                    <a onClick={() => openEditModal(index)}>Редактировать</a>,
+                    <a onClick={() => handleDeleteContribution(index)}>Удалить</a>,
+                  ]}
+                >
+                  {item.amount} {item.currency} — {item.date}
+                </List.Item>
+              )}
+            />
+
+            <Modal
+              title="Редактировать взнос"
+              open={editingIndex !== null}
+              onOk={handleSaveEdit}
+              onCancel={() => setEditingIndex(null)}
+            >
+              <Space direction="vertical" style={{ width: "100%" }}>
+                <Input
+                  value={editAmount}
+                  onChange={(e) => setEditAmount(e.target.value)}
+                  type="number"
+                />
+                <Select value={editCurrency} onChange={(val) => setEditCurrency(val)} style={{ width: "100%" }}>
+                  <Option value="₾">₾</Option>
+                  <Option value="$">$</Option>
+                  <Option value="€">€</Option>
+                  <Option value="₽">₽</Option>
+                </Select>
+              </Space>
+            </Modal>
+          </>
+        ) : (
+          <>
+            {taskList.map((task, index) => (
+              <Space key={index} style={{ display: "flex", width: "100%" }}>
+                <Checkbox checked={task.completed} onChange={() => handleCheck(index)} />
+                <Input
+                  value={task.text}
+                  onChange={(e) => {
+                    const updated = [...taskList];
+                    updated[index].text = e.target.value;
+                    setTaskList(updated);
+                  }}
+                />
+                <Button onClick={() => handleDeleteTask(index)}>Удалить</Button>
+              </Space>
+            ))}
+
+            <Space>
+              <Input
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                placeholder="Новая задача"
+              />
+              <Button onClick={handleAddTask}>Добавить</Button>
+            </Space>
+            {taskList.length > 0 && <Progress percent={Math.round(taskProgress)} />}
+          </>
+        )}
+                <Button onClick={() => setIsColorPickerVisible(!isColorPickerVisible)}>
+          {isColorPickerVisible ? "Скрыть палитру" : "Выбрать цвет"}
+        </Button>
+
+        {isColorPickerVisible && (
+          <div
+            style={{
+              position: "absolute",
+              zIndex: 1000,
+              top: 50,
+              left: 50,
+              background: "#fff",
+              boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+              borderRadius: 8,
+              padding: 8,
+            }}
+          >
+            <button
+              onClick={() => setIsColorPickerVisible(false)}
+              style={{
+                position: "absolute",
+                top: -19,
+                right: -5,
+                background: "transparent",
+                border: "none",
+                fontSize: 35,
+                cursor: "pointer",
+                color: "#333",
+              }}
+            >
+              ×
+            </button>
+            <SketchPicker
+              color={selectedColor}
+              onChangeComplete={(color) => setSelectedColor(color.hex)}
+            />
+          </div>
+        )}
+      </Space>
+
+    </div>
       </Space>
     </div>
   );
